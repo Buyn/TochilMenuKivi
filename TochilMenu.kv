@@ -1,0 +1,53 @@
+#:kivy 1.0
+# * <Interface>: :
+# ** ---<Interface>:-------------------------------:
+<Interface>:
+    # label_wid: my_custom_label
+    label_timeid: curent_time_label
+    label_dateid: curent_date_label
+    orientation: 'horizontal'
+
+# ** BoxLayout Sharping : 
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 50
+
+        Button:
+            text: 'Start Sharpening' 
+            on_press: root.do_action()
+
+        Button:
+            # text: 'Repit Last' + root.info
+            text: 'Repit Last'
+            on_press: root.do_action()
+
+
+# ** BoxLayout Radio Asistent : 
+    BoxLayout:
+    # FloatLayout:
+        orientation: 'vertical'
+        # orientation: 'horizontal'
+        padding: 50
+
+        Button:
+            text: 'Google Asistent' 
+            on_press: root.do_action()
+
+        Button:
+            # text: 'Radio' + root.info
+            text: 'Radio'
+            on_press: root.do_action()
+
+        Label:
+            id: curent_date_label
+            text: 'Augus/25/2020'
+
+        Label:
+            id: curent_time_label
+            text: root.info
+
+        Button:
+            text: 'Options' 
+            on_press: root.do_action()
+
+# ** ----------------------------------------------:
