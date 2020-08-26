@@ -207,8 +207,8 @@ class TochilMenuApp(App):
 
 # ** def build(self): : 
     def build(self):
-        # root_widget = Interface()
-        root_widget = SharpScreen()
+        root_widget = Interface()
+        # root_widget = SharpScreen()
         return root_widget
 
 
