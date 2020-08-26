@@ -112,7 +112,7 @@ class Interface(BoxLayout):
 
 # * class MainScreen(BoxLayout): : 
 # ** -MainScreen------------------------------------:
-class MainScreen(BoxLayout):
+class MainScreen(Screen):
 # class Interface(FloatLayout):
     # curent_time_label = ObjectProperty()
     # curent_date_label = ObjectProperty()

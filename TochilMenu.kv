@@ -9,13 +9,13 @@
     ScreenManager:
         screenmeneger: id_screenmanader
         id: id_screenmanader
-        Screen:
+        # Screen:
             # id: id_screen_mainmenu
             # name: "mainmenu" 
             # MainScreen:
+        MainScreen:
             id: id_screen_mainmenu
             name: "mainmenu" 
-            MainScreen:
             # Button:
             #     text: 'Test' 
             #     on_press:  id_screen_mainmenu.manager.current = 'sharpmenu'
@@ -29,53 +29,53 @@
 <MainScreen>:
     label_timeid: curent_time_label
     label_dateid: curent_date_label
-    orientation: 'horizontal'
-
+    BoxLayout:
+        orientation: 'horizontal'
 
 # ** BoxLayout Sharping : 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: 50
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 50
 
-        Button:
-            text: 'Start Sharpening' 
-            # on_press: root.do_action()
-            # on_press:  id_screenmanader = 'sharpmenu'
-            on_press:  screenmeneger.manager.current = 'sharpmenu'
+            Button:
+                text: 'Start Sharpening' 
+                # on_press: root.do_action()
+                # on_press:  id_screenmanader = 'sharpmenu'
+                on_press:  root.manager.current = 'sharpmenu'
 
 
-        Button:
-            # text: 'Repit Last' + root.info
-            text: 'Repit Last'
-            on_press: root.do_action()
+            Button:
+                # text: 'Repit Last' + root.info
+                text: 'Repit Last'
+                on_press: root.do_action()
 
 # ** BoxLayout Radio Asistent : 
-    BoxLayout:
-    # FloatLayout:
-        orientation: 'vertical'
-        # orientation: 'horizontal'
-        padding: 50
+        BoxLayout:
+        # FloatLayout:
+            orientation: 'vertical'
+            # orientation: 'horizontal'
+            padding: 50
 
-        Button:
-            text: 'Google Asistent' 
-            on_press: root.do_action()
+            Button:
+                text: 'Google Asistent' 
+                on_press: root.do_action()
 
-        Button:
-            # text: 'Radio' + root.info
-            text: 'Radio'
-            on_press: root.do_action()
+            Button:
+                # text: 'Radio' + root.info
+                text: 'Radio'
+                on_press: root.do_action()
 
-        Label:
-            id: curent_date_label
-            text: 'Augus/25/2020'
+            Label:
+                id: curent_date_label
+                text: 'Augus/25/2020'
 
-        Label:
-            id: curent_time_label
-            text: root.info
+            Label:
+                id: curent_time_label
+                text: root.info
 
-        Button:
-            text: 'Options' 
-            on_press: root.do_action()
+            Button:
+                text: 'Options' 
+                on_press: root.do_action()
 
 # ** ----------------------------------------------:
 
