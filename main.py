@@ -110,7 +110,7 @@ class Interface(BoxLayout):
 # ** ----------------------------------------------:
 
 
-# * class MainScreen(BoxLayout): : 
+# * class MainScreen(Screen): : 
 # ** -MainScreen------------------------------------:
 class MainScreen(Screen):
 # class Interface(FloatLayout):
@@ -157,9 +157,9 @@ class MainScreen(Screen):
 # ** ----------------------------------------------:
 
 
-# * class SharpScreen(BoxLayout): : 
+# * class SharpScreen(Screen): : 
 # ** -SharpScreen------------------------------------:
-class SharpScreen(BoxLayout):
+class SharpScreen(Screen):
 # class Interface(FloatLayout):
     # curent_time_label = ObjectProperty()
     # curent_date_label = ObjectProperty()
@@ -207,7 +207,8 @@ class TochilMenuApp(App):
 
 # ** def build(self): : 
     def build(self):
-        root_widget = Interface()
+        # root_widget = Interface()
+        root_widget = SharpScreen()
         return root_widget
 
 
