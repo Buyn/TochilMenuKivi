@@ -1,0 +1,186 @@
+#:kivy 1.0
+#:import Factory kivy.factory.Factory
+# * <Interface>: :
+# ** ---<Interface>:-------------------------------:
+<Interface>:
+    ScreenManager:
+        MainScreen:
+            name: "mainmenu" 
+        SharpScreen:
+            name: "sharpmenu" 
+
+
+# * <MainScreen>: :
+# ** ------------------MainScreen----------------:
+<MainScreen>:
+    label_timeid: curent_time_label
+    label_dateid: curent_date_label
+    BoxLayout:
+        orientation: 'horizontal'
+
+# ** BoxLayout Sharping : 
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 50
+
+            Button:
+                text: 'Start Sharpening' 
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = 'sharpmenu'
+
+
+            Button:
+                # text: 'Repit Last' + root.info
+                text: 'Repit Last'
+                # on_press: root.do_action()
+                on_press: Factory.StartSharpPopup().open()
+
+# ** BoxLayout Radio Asistent : 
+        BoxLayout:
+        # FloatLayout:
+            orientation: 'vertical'
+            # orientation: 'horizontal'
+            padding: 50
+
+            Button:
+                text: 'Google Asistent' 
+                on_press: root.do_action()
+
+            Button:
+                # text: 'Radio' + root.info
+                text: 'Radio'
+                on_press: root.do_action()
+
+            Label:
+                id: curent_date_label
+                text: 'Augus/25/2020'
+
+            Label:
+                id: curent_time_label
+                text: root.info
+
+            Button:
+                text: 'Options' 
+                on_press: root.do_action()
+
+# ** ----------------------------------------------:
+
+
+# * <SharpScreen>: :
+# ** ------------------SharpScreen----------------:
+<SharpScreen>:
+    # label_timeid: curent_time_label
+    # label_dateid: curent_date_label
+    BoxLayout:
+        # orientation: 'horizontal'
+        orientation: 'vertical'
+
+
+# ** BoxLayout start cicles : 
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 5
+
+            Button:
+                text: 'Full Cicle' 
+                # on_press: root.do_action()
+                on_press: on_release: Factory.StartSharpPopup().open()
+
+            Button:
+                # text: 'Repit Last' + root.info
+                text: 'Midle Cicle'
+                # on_press: root.do_action()
+                on_press: on_release: Factory.StartSharpPopup().open()
+
+
+# ** BoxLayout Left right side : 
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 20
+            
+            Button:
+                text: '<< ' 
+                # size: (160, 120)
+                # text_size: self.size
+                # text_size: root.width, None
+                # size: self.texture_size
+                font_size: '100sp'
+                width: 5
+                # markup: True
+                # text_size:  None, None
+                background_color : [1, 1, 200, 1]
+                on_press: 
+                    root.manager.transition.direction = 'right'
+                    # root.manager.transition.direction = 'left'
+                    root.manager.current = 'mainmenu'
+
+            # Button:
+            ToggleButton:
+                group: 'sides'
+                state: 'down'
+                text: 'Left Side' 
+                # on_press: root.do_action()
+
+            # Switch:
+            #     id: switch
+            #     text: 'Left ' 
+
+            # Button:
+            ToggleButton:
+                group: 'sides'
+                text: 'Right Side'
+                # on_press: root.do_action()
+
+# ** BoxLayout other settings : 
+        BoxLayout:
+        # FloatLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 5
+
+            CheckBox:
+                color: [1, 1, 200, 1]
+                # group: 'emails'
+                # on_press: root.do_action()
+            Label:
+                # id: curent_date_label
+                text: 'Ceramic knife' 
+
+            # Button:
+            CheckBox:
+                # group: 'emails'
+                active: True  
+                # on_press: root.do_action()
+            Label:
+                # id: curent_date_label
+                text: 'Antibacterial cicle' 
+# ** ----------------------------------------------:
+# * <StartSharpPopup@Popup>: : 
+<StartSharpPopup@Popup>:
+    title: "Conform to Start"
+    # auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        # orientation: 'horizontal'
+        padding: 20
+        
+        Label:
+            text: 'Conform start of knife sharpening'
+
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 10
+            Button:
+                text: 'Start!'
+                on_release: root.dismiss()
+            Button:
+                text: 'Abort!'
+                on_release: root.dismiss()
+
+# Button:
+#     text: 'Open popup'
+#     on_release: Factory.StartSharpPopup().open()
