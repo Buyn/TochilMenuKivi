@@ -4,6 +4,8 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        OptionScreen:
+            name: "optionscreen" 
         TimerScreen:
             name: "timerscreen" 
         MainScreen:
@@ -76,7 +78,9 @@
 
             Button:
                 text: 'Options' 
-                on_press: root.do_action()
+                on_press:
+                    root.manager.transition.direction = 'up'
+                    root.manager.current = 'optionscreen'
 
 # ** ----------------------------------------------:
 
@@ -279,6 +283,73 @@
             Label:
                 # id: curent_date_label
                 text: 'Antibacterial cicle' 
+# ** ----------------------------------------------:
+# * <OptionScreen>: :
+# ** ------------------OptionScreen----------------:
+<OptionScreen>:
+    # label_timeid: curent_time_label
+    # label_dateid: curent_date_label
+    BoxLayout:
+        # orientation: 'horizontal'
+        orientation: 'vertical'
+
+
+# ** BoxLayout Left right side : 
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 20
+            
+            Button:
+                text: '<< ' 
+                # size: (160, 120)
+                # text_size: self.size
+                # text_size: root.width, None
+                # size: self.texture_size
+                font_size: '100sp'
+                width: 5
+                # markup: True
+                # text_size:  None, None
+                background_color : [1, 1, 200, 1]
+                on_press: 
+                    root.manager.transition.direction = 'down'
+                    # root.manager.transition.direction = 'left'
+                    root.manager.current = 'mainmenu'
+
+            CheckBox:
+                color: [1, 1, 200, 1]
+                # group: 'emails'
+                # on_press: root.do_action()
+            Label:
+                # id: curent_date_label
+                text: 'Diod line' 
+
+# ** BoxLayout start cicles : 
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 5
+
+            BoxLayout:
+                # orientation: 'vertical'
+                orientation: 'vertical'
+                padding: 5
+
+                Label:
+                    text: 'Speech comformatio' 
+                    # on_press: root.do_action()
+                Label:
+                    text: '-------------------' 
+                    # on_press: root.do_action()
+
+            Label:
+                # text: 'Repit Last' + root.info
+                text: '50%'
+                font_size: '100sp'
+                width: 5
+                # on_press: root.do_action()
+
+
 # ** ----------------------------------------------:
 # * <StartSharpPopup@Popup>: : 
 <StartSharpPopup@Popup>:

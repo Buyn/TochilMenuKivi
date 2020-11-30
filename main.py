@@ -227,6 +227,32 @@ class TimerScreen(Screen):
 # ** ----------------------------------------------:
 
 
+# * class OptionScreen(Screen): : 
+# ** OptionScreen------------------------------------:
+class OptionScreen(Screen):
+# class Interface(FloatLayout):
+    # curent_time_label = ObjectProperty()
+    # curent_date_label = ObjectProperty()
+    # label_dateid = ObjectProperty(datetime.now().strftime("%d/%m/%Y"))
+    # label_timeid = ObjectProperty(datetime.now().strftime("%H:%M:%S"))
+    info = StringProperty()
+
+# ----------------------------------------------
+# ** def __init__(self, **kwargs): : 
+    # def __init__(self, **kwargs):
+    #     super(SharpScreen, self).__init__(**kwargs)
+        # self.curent_time_label.text = datetime.now().strftime("%d/%m/%Y")
+        # self.curent_date_label.text = datetime.now().strftime("%H:%M:%S")
+        # self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
+        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
+        # self.event_time_updaaate = Clock.schedule_interval(
+        #                     self.update_time, 0.5)
+
+
+# ----------------------------------------------
+# ** ----------------------------------------------:
+
+
 # * class TochilMenuApp(App): 
 # ** ------TochilMenuApp-----------------------:
 class TochilMenuApp(App):
