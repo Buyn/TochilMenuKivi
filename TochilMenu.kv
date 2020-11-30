@@ -4,6 +4,8 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        TimerScreen:
+            name: "timerscreen" 
         MainScreen:
             name: "mainmenu" 
         SharpScreen:
@@ -30,11 +32,23 @@
                     root.manager.current = 'sharpmenu'
 
 
-            Button:
-                # text: 'Repit Last' + root.info
-                text: 'Repit Last'
-                # on_press: root.do_action()
-                on_press: Factory.StartSharpPopup().open()
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 0
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: 'Timer'
+                    # on_press: root.do_action()
+                    on_press:
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'timerscreen'
+                    # on_press: Factory.StartSharpPopup().open()
+
+                Label:
+                    # id: curent_date_label
+                    text: ' '
+
 
 # ** BoxLayout Radio Asistent : 
         BoxLayout:
@@ -63,6 +77,114 @@
             Button:
                 text: 'Options' 
                 on_press: root.do_action()
+
+# ** ----------------------------------------------:
+
+
+# * <TimerScreen>: :
+# ** ------------------TimerScreen----------------:
+<TimerScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+# ** BoxLayout Timer Scrols : 
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 50
+
+# *** BoxLayout Hours : 
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 5
+
+                Label:
+                    # id: curent_date_label
+                    text: 'Hours'
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '+'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+                Label:
+                    # id: curent_date_label
+                    text: '- -'
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '-'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+# *** BoxLayout Minuts : 
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 5
+
+                Label:
+                    # id: curent_date_label
+                    text: 'Minuts'
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '+'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+                Label:
+                    # id: curent_date_label
+                    text: '- -'
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '-'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+# *** BoxLayout Secunds : 
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 5
+
+                Label:
+                    # id: curent_date_label
+                    text: 'Secunds'
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '+'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+                Label:
+                    # id: curent_date_label
+                    text: '- -'
+
+                Button:
+                    # text: 'Repit Last' + root.info
+                    text: '-'
+                    # on_press: root.do_action()
+                    on_press: Factory.StartSharpPopup().open()
+
+# ** BoxLayout Buttons : 
+        BoxLayout:
+        # FloatLayout:
+            orientation: 'horizontal'
+            # orientation: 'horizontal'
+            padding: 50
+
+            Button:
+                text: 'Start Timer' 
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = 'mainmenu'
+
+            Button:
+                # text: 'Radio' + root.info
+                text: 'Cancel'
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = 'mainmenu'
 
 # ** ----------------------------------------------:
 
