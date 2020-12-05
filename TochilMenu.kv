@@ -1,17 +1,41 @@
 #:kivy 1.0
 #:import Factory kivy.factory.Factory
+# * creating new classes: :
+# ** # <Button100@Button> : 
+# <Button100@Button>: 
+#     size_hint: [None, None] 
+#     size: [100, 100] 
+# ** BBack@Button : 
+<BBack@Button>: 
+    text: '<< ' 
+    font_size: '100sp'
+    width: 5
+    background_color : [1, 1, 200, 1]
+    on_press: 
+        root.manager.transition.direction = 'right'
+        root.manager.current = 'mainmenu'
+# ** HBox@BoxLayout : 
+<HBox@BoxLayout>:
+    orientation: 'horizontal'
+    spacing: 10
+    padding: 20
+# ** VBox@BoxLayout : 
+<VBox@BoxLayout>:
+    orientation: 'vertical'
+    spacing: 10
+    padding: 20
 # * <Interface>: :
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        SharpScreen:
+            name: "sharpmenu" 
         OptionScreen:
             name: "optionscreen" 
         TimerScreen:
             name: "timerscreen" 
         MainScreen:
             name: "mainmenu" 
-        SharpScreen:
-            name: "sharpmenu" 
 
 
 # * <MainScreen>: :
@@ -94,7 +118,7 @@
 # ** BoxLayout Timer Scrols : 
         BoxLayout:
             orientation: 'horizontal'
-            padding: 50
+            padding: 20
 
 # *** BoxLayout Hours : 
             BoxLayout:
@@ -174,8 +198,8 @@
         BoxLayout:
         # FloatLayout:
             orientation: 'horizontal'
-            # orientation: 'horizontal'
-            padding: 50
+            padding: 20
+            spacing: 20
 
             Button:
                 text: 'Start Timer' 
@@ -221,45 +245,6 @@
                 on_press: on_release: Factory.StartSharpPopup().open()
 
 
-# ** BoxLayout Left right side : 
-        BoxLayout:
-            # orientation: 'vertical'
-            orientation: 'horizontal'
-            padding: 20
-            
-            Button:
-                text: '<< ' 
-                # size: (160, 120)
-                # text_size: self.size
-                # text_size: root.width, None
-                # size: self.texture_size
-                font_size: '100sp'
-                width: 5
-                # markup: True
-                # text_size:  None, None
-                background_color : [1, 1, 200, 1]
-                on_press: 
-                    root.manager.transition.direction = 'right'
-                    # root.manager.transition.direction = 'left'
-                    root.manager.current = 'mainmenu'
-
-            # Button:
-            ToggleButton:
-                group: 'sides'
-                state: 'down'
-                text: 'Left Side' 
-                # on_press: root.do_action()
-
-            # Switch:
-            #     id: switch
-            #     text: 'Left ' 
-
-            # Button:
-            ToggleButton:
-                group: 'sides'
-                text: 'Right Side'
-                # on_press: root.do_action()
-
 # ** BoxLayout other settings : 
         BoxLayout:
         # FloatLayout:
@@ -283,6 +268,38 @@
             Label:
                 # id: curent_date_label
                 text: 'Antibacterial cicle' 
+# ** BoxLayout Left right side : 
+        BoxLayout:
+            # orientation: 'vertical'
+            orientation: 'horizontal'
+            padding: 20
+            # Button:
+            #     text: '<< ' 
+            #     font_size: '100sp'
+            #     width: 5
+            #     background_color : [1, 1, 200, 1]
+            #     on_press: 
+            #         root.manager.transition.direction = 'right'
+            #         root.manager.current = 'mainmenu'
+            BBack:
+
+            # Button:
+            ToggleButton:
+                group: 'sides'
+                state: 'down'
+                text: 'Left Side' 
+                # on_press: root.do_action()
+
+            # Switch:
+            #     id: switch
+            #     text: 'Left ' 
+
+            # Button:
+            ToggleButton:
+                group: 'sides'
+                text: 'Right Side'
+                # on_press: root.do_action()
+
 # ** ----------------------------------------------:
 # * <OptionScreen>: :
 # ** ------------------OptionScreen----------------:
@@ -294,18 +311,19 @@
         orientation: 'vertical'
 
 
-# ** BoxLayout Left right side : 
+# ** BoxLayout check boxes  end back: 
         BoxLayout:
             # orientation: 'vertical'
             orientation: 'horizontal'
             padding: 20
-            
+# *** Button: '<< ' : 
             Button:
                 text: '<< ' 
                 # size: (160, 120)
                 # text_size: self.size
                 # text_size: root.width, None
                 # size: self.texture_size
+                size_hint: (0.5, 0.5)
                 font_size: '100sp'
                 width: 5
                 # markup: True
@@ -313,16 +331,29 @@
                 background_color : [1, 1, 200, 1]
                 on_press: 
                     root.manager.transition.direction = 'down'
-                    # root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
-
-            CheckBox:
-                color: [1, 1, 200, 1]
-                # group: 'emails'
-                # on_press: root.do_action()
-            Label:
-                # id: curent_date_label
-                text: 'Diod line' 
+# *** CheckBox : 
+            BoxLayout:
+                orientation: 'horizontal'
+                padding: 20
+                # on_touch_down: diod_cheker.active=True ;print('down')
+                on_touch_down: if (not diod_cheker.active): diod_cheker.active=True; print('down')
+                AnchorLayout:
+                    anchor_x:'right' 
+                    # anchor_y:'top'
+                    anchor_y:'center'
+                    CheckBox:
+                        id: diod_cheker
+                        text: 'Diod line' 
+                        size_hint: (0.3, 0.9)
+                AnchorLayout:
+                    anchor_x:'left' 
+                    anchor_y:'center'
+                    # anchor_y:'top'
+                    Label:
+                        # size_hint_x: None
+                        text: 'Diod line' 
+                        size_hint: (0.1, 0.1)
 
 # ** BoxLayout start cicles : 
         BoxLayout:
@@ -338,9 +369,13 @@
                 Label:
                     text: 'Speech comformatio' 
                     # on_press: root.do_action()
-                Label:
-                    text: '-------------------' 
-                    # on_press: root.do_action()
+                Slider:
+                    min: 0
+                    max: 1
+                    value: 0.5
+                    size_hint_y: None
+                    height: 50
+
 
             Label:
                 # text: 'Repit Last' + root.info
