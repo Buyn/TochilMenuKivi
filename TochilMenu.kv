@@ -1,42 +1,76 @@
 #:kivy 1.0
 #:import Factory kivy.factory.Factory
 # * creating new classes: :
-# ** # <Button100@Button> : 
+# ** Button : 
+# *** <Button100@Button> : 
 # <Button100@Button>: 
 #     size_hint: [None, None] 
 #     size: [100, 100] 
-# ** BBack@Button : 
+# *** BBack@Button : 
 <BBack@Button>: 
     text: '<< ' 
     font_size: '100sp'
     width: 5
+    size_hint: [None, None] 
+    size: [200, 150] 
     background_color : [1, 1, 200, 1]
     on_press: 
         root.manager.transition.direction = 'right'
         root.manager.current = 'mainmenu'
-# ** HBox@BoxLayout : 
+# ** BoxLayout : 
+# *** HBox@BoxLayout : 
 <HBox@BoxLayout>:
     orientation: 'horizontal'
     spacing: 10
     padding: 20
-# ** VBox@BoxLayout : 
+# *** VBox@BoxLayout : 
 <VBox@BoxLayout>:
     orientation: 'vertical'
     spacing: 10
     padding: 20
+# ** AnchorLayout : 
+# *** AncL_rc@AnchorLayout : 
+<AncL_rc@AnchorLayout>:
+    anchor_x:'right' 
+    # anchor_y:'top'
+    anchor_y:'center'
+# *** AncL_lc@AnchorLayout : 
+<AncL_lc@AnchorLayout>:
+    anchor_x:'left' 
+    # anchor_y:'top'
+    anchor_y:'center'
+# *** AncL_cc@AnchorLayout : 
+<AncL_cc@AnchorLayout>:
+    anchor_x:'center' 
+    anchor_y:'center'
+# ** CheckBox : 
+<CboxAnc@BoxLayout>
+    orientation: 'horizontal'
+    padding: 20
+    on_touch_down: if (not diod_cheker.active): diod_cheker.active=True; print('down')
+    AnchorLayout:
+        anchor_x:'right' 
+        anchor_y:'center'
+        CheckBox:
+            id: diod_cheker
+            text: 'Diod line' 
+            size_hint: (0.4, 0.4)
 # * <Interface>: :
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        MainScreen:
+            name: "mainmenu" 
+        ProcessScreen:
+            name: "processscreen" 
+        ConformSharpeningScreen:
+            name: "conformsharpeningscreen" 
         SharpScreen:
             name: "sharpmenu" 
         OptionScreen:
             name: "optionscreen" 
         TimerScreen:
             name: "timerscreen" 
-        MainScreen:
-            name: "mainmenu" 
-
 
 # * <MainScreen>: :
 # ** ------------------MainScreen----------------:
@@ -232,74 +266,165 @@
             # orientation: 'vertical'
             orientation: 'horizontal'
             padding: 5
-
-            Button:
+            ToggleButton:
+                group: 'cicle'
                 text: 'Full Cicle' 
                 # on_press: root.do_action()
-                on_press: on_release: Factory.StartSharpPopup().open()
-
-            Button:
+                # on_press: on_release: Factory.StartSharpPopup().open()
+            ToggleButton:
                 # text: 'Repit Last' + root.info
+                state: 'down'
+                group: 'cicle'
                 text: 'Midle Cicle'
                 # on_press: root.do_action()
-                on_press: on_release: Factory.StartSharpPopup().open()
+                # on_press: on_release: Factory.StartSharpPopup().open()
 
-
-# ** BoxLayout other settings : 
-        BoxLayout:
-        # FloatLayout:
-            # orientation: 'vertical'
-            orientation: 'horizontal'
-            padding: 5
-
-            CheckBox:
-                color: [1, 1, 200, 1]
-                # group: 'emails'
-                # on_press: root.do_action()
-            Label:
-                # id: curent_date_label
-                text: 'Ceramic knife' 
-
-            # Button:
-            CheckBox:
-                # group: 'emails'
-                active: True  
-                # on_press: root.do_action()
-            Label:
-                # id: curent_date_label
-                text: 'Antibacterial cicle' 
+# ** BoxLayout back & next : 
+        HBox:
+            Button:
+                text: '<<' 
+                font_size: '100sp'
+                width: 5
+                size_hint: [None, None] 
+                size: [200, 150] 
+                background_color : [1, 1, 200, 1]
+                on_press: 
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'mainmenu'
+            VBox:
+                CboxAnc:
+                    AncL_cc:
+                        Label:
+                            size_hint: (0.3, 0.3)
+                            text: 'Ceramic knife' 
+                CboxAnc:
+                    AncL_cc:
+                        Label:
+                            size_hint: (0.3, 0.3)
+                            text: 'Antibacterial cicle' 
+            Button:
+                text: 'ok' 
+                font_size: '100sp'
+                width: 5
+                size_hint: [None, None] 
+                size: [200, 150] 
+                background_color : [1, 1, 200, 1]
+                on_press: 
+                    root.manager.transition.direction = 'left'
+                    root.manager.current = 'conformsharpeningscreen'
 # ** BoxLayout Left right side : 
         BoxLayout:
-            # orientation: 'vertical'
-            orientation: 'horizontal'
-            padding: 20
-            # Button:
-            #     text: '<< ' 
-            #     font_size: '100sp'
-            #     width: 5
-            #     background_color : [1, 1, 200, 1]
-            #     on_press: 
-            #         root.manager.transition.direction = 'right'
-            #         root.manager.current = 'mainmenu'
-            BBack:
-
-            # Button:
+            orientation: 'vertical'
             ToggleButton:
                 group: 'sides'
-                state: 'down'
-                text: 'Left Side' 
+                text: 'Both Sides' 
                 # on_press: root.do_action()
+            BoxLayout:
+                orientation: 'horizontal'
+                ToggleButton:
+                    group: 'sides'
+                    state: 'down'
+                    text: 'Left Side' 
+                    # on_press: root.do_action()
+                ToggleButton:
+                    group: 'sides'
+                    text: 'Right Side'
+                    # on_press: root.do_action()
 
-            # Switch:
-            #     id: switch
-            #     text: 'Left ' 
+# ** ----------------------------------------------:
+# * <ConformSharpeningScreen>: :
+# ** ------------------ConformSharpeningScreen----------------:
+<ConformSharpeningScreen>:
+    VBox
+# ** Title : 
+        Label:
+            # id: curent_date_label
+            size_hint: [0.5, 0.1] 
+            font_size: '30sp'
+            text: 'List of selected regims:'
+# ** Sets filde : 
+        VBox
+            Label:
+                # id: curent_date_label
+                text: 'Full cicle'
+            Label:
+                # id: curent_date_label
+                text: 'Antibacterial'
+            Label:
+                # id: curent_date_label
+                text: 'Too sides'
 
-            # Button:
-            ToggleButton:
-                group: 'sides'
-                text: 'Right Side'
-                # on_press: root.do_action()
+# ** BoxLayout Buttons : 
+        HBox:
+            size_hint: [1, 0.5] 
+            padding: 1
+            Button:
+                text: '<<' 
+                font_size: '100sp'
+                # width: 5
+                size_hint: [0.5, 1] 
+                # size: [200, 150] 
+                background_color : [1, 1, 200, 1]
+                on_press: 
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'sharpmenu'
+            VBox:
+                padding: 0
+                Button: 
+                    text: 'START' 
+                    background_color : [1, 1, 200, 1]
+                    on_press: 
+                        root.manager.transition.direction = 'left'
+                        root.manager.current = 'processscreen'
+                Button:
+                    text: 'Back to select' 
+                    background_color : [1, 1, 200, 1]
+                    on_press: 
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'sharpmenu'
+# ** ----------------------------------------------:
+# * <ProcessScreen>: :
+# ** ------------------ProcessScreen----------------:
+<ProcessScreen>:
+    VBox
+# ** Title : 
+        HBox
+            size_hint: [1, 0.3] 
+            Label:
+                # id: curent_date_label
+                size_hint: [0.5, 1] 
+                font_size: '30sp'
+                id: curent_date_label
+                text: '12/20/2020 '
+            Label:
+                # id: curent_date_label
+                size_hint: [0.5, 1] 
+                font_size: '50sp'
+                text: root.info
+                text: ' 08:10:45'
+                id: curent_time_label
 
+# ** Progress Bar : 
+        VBox
+            ProgressBar:
+                value: 40
+                # id: curent_date_label
+                text: 'Full cicle'
+            Label:
+                # id: curent_date_label
+                text: 'Polishing'
+
+# ** Buttons : 
+        Button:
+            text: 'Cancel' 
+            font_size: '100sp'
+            # width: 5
+            size_hint: [1, 0.5] 
+            # size: [200, 150] 
+            background_color : [1, 1, 200, 1]
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'mainmenu'
 # ** ----------------------------------------------:
 # * <OptionScreen>: :
 # ** ------------------OptionScreen----------------:
@@ -394,10 +519,8 @@
         orientation: 'vertical'
         # orientation: 'horizontal'
         padding: 20
-        
         Label:
             text: 'Conform start of knife sharpening'
-
         BoxLayout:
             # orientation: 'vertical'
             orientation: 'horizontal'
