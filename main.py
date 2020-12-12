@@ -13,9 +13,13 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, StringProperty
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta 
+from random import randrange
 
 
+# ----------------------------------------------
+# * modul global id values:
+main_menu_timer_label = None 
 # ----------------------------------------------
 # * class FirstKivy(App): :
 # ** ----------------------------------------------:
@@ -55,17 +59,6 @@ class FirstKivy(App):
     def udateButton(self, inst, *args): 
         inst.text = self.newtext
                 
-
-# ----------------------------------------------
-# ** ----------------------------------------------:
-# * class Main_Windows :
-# ** ----------------------------------------------:
-class Main_Windows():
-# ** def __init__(self): : 
-    def __init__(self):
-        self.temp_A = 11
-        self.temp_B = 14
-
 
 # ----------------------------------------------
 # ** ----------------------------------------------:
@@ -127,6 +120,7 @@ class MainScreen(Screen):
         # print ("*******ids-mainscreen*******")
         super(MainScreen, self).__init__(**kwargs)
         #  self.event_time_update for late use
+        # main_menu_timer_label = self.label_timerid
         self.event_time_update = Clock.schedule_interval(
                             self.update_time, 0.5)
 
@@ -229,8 +223,9 @@ class ProcessScreen(Screen):
         # print ("*******ids-ProcessScreen*******")
         super( ProcessScreen, self).__init__(**kwargs)
         #  self.event_time_update for late use
-        # self.event_time_update = Clock.schedule_interval(
-        #                     self.update_time, 0.5)
+        self.progress_value = 0
+        self.event_time_update = Clock.schedule_interval(
+                            self.update_time, 0.01)
 
 
 # ----------------------------------------------
@@ -239,10 +234,28 @@ class ProcessScreen(Screen):
         # only after StringProperty() in init class
         self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
         self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
+        self.progressbar_Update()
 
 
 # ----------------------------------------------
 # ----------------------------------------------
+# ** def progressbar_Update(self): : 
+    def progressbar_Update(self):
+        if self.progress_value >=100 : self.progressbar_Finish()
+        # self.progress_value += randrange(0, 3)
+        self.progress_value += 0.1
+        self.progressbarid.value = self.progress_value
+        # only after StringProperty() in init class
+        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
+
+
+# ----------------------------------------------
+# ----------------------------------------------
+# ** def progressbar_Finish : 
+    def progressbar_Finish(self): 
+        self.finishButton.background_color = [1, 200, 1, 1]
+        self.finishButton.text = "Finished"
+
 # ** ----------------------------------------------:
 
 
@@ -258,14 +271,34 @@ class TimerScreen(Screen):
 
 # ----------------------------------------------
 # ** def __init__(self, **kwargs): : 
-    # def __init__(self, **kwargs):
-    #     super(SharpScreen, self).__init__(**kwargs)
-        # self.curent_time_label.text = datetime.now().strftime("%d/%m/%Y")
-        # self.curent_date_label.text = datetime.now().strftime("%H:%M:%S")
-        # self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
-        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        # self.event_time_updaaate = Clock.schedule_interval(
-        #                     self.update_time, 0.5)
+    def __init__(self, **kwargs):
+        super(TimerScreen, self).__init__(**kwargs)
+        self.runing_Timer = None
+        self.timerEnd = None
+
+# ** defs : 
+    def isTimerRuning(self):
+        pass
+
+    def update_Timer(self):
+        if not self.timerEnd : return print ("timer no started error")
+        print(( self.timerEnd).strftime("%d/%m/%Y %H:%M:%S"))
+        # print((self.timerEnd - datetime.now()).strftime("%d/%m/%Y"))
+
+    def start_timer(self, d_hours=0, d_minutes=0, d_seconds=0):
+        self.timerEnd =     datetime.now() + timedelta(
+                                  # days=50,
+                                  hours=d_hours,
+                                  minutes=d_minutes,
+                                  seconds=d_seconds,
+                                  # microseconds=10,
+                                  # milliseconds=29000,
+                                  # weeks=2
+                              )
+
+        # self.runing_Timer = Clock.schedule_interval(
+        #                     self.update_Timer, 0.5)
+
 
 
 # ----------------------------------------------
@@ -275,7 +308,6 @@ class TimerScreen(Screen):
 # * class OptionScreen(Screen): : 
 # ** OptionScreen------------------------------------:
 class OptionScreen(Screen):
-# class Interface(FloatLayout):
     # curent_time_label = ObjectProperty()
     # curent_date_label = ObjectProperty()
     # label_dateid = ObjectProperty(datetime.now().strftime("%d/%m/%Y"))
@@ -314,9 +346,7 @@ class TochilMenuApp(App):
 # * def main(argv): : 
 # ----------------------------------------------
 def main(argv):
-    print ("hello world!")
     print (argv)
-    # FirstKivy().run()
     print("date.today = ", date.today())
     TochilMenuApp().run()
 

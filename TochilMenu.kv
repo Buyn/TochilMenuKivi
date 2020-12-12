@@ -59,6 +59,8 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        TimerScreen:
+            name: "timerscreen" 
         MainScreen:
             name: "mainmenu" 
         ProcessScreen:
@@ -69,14 +71,13 @@
             name: "sharpmenu" 
         OptionScreen:
             name: "optionscreen" 
-        TimerScreen:
-            name: "timerscreen" 
 
 # * <MainScreen>: :
 # ** ------------------MainScreen----------------:
 <MainScreen>:
     label_timeid: curent_time_label
     label_dateid: curent_date_label
+    label_timerid: curent_timer_label
     BoxLayout:
         orientation: 'horizontal'
 
@@ -106,7 +107,7 @@
                     # on_press: Factory.StartSharpPopup().open()
 
                 Label:
-                    # id: curent_date_label
+                    id: curent_timer_label
                     text: ' '
 
 
@@ -146,13 +147,16 @@
 # * <TimerScreen>: :
 # ** ------------------TimerScreen----------------:
 <TimerScreen>:
+    # label_Hours: widgets_label_Hours
+    # label_Minuts: widgets_label_Minuts
+    # label_Secunds: widgets_label_Secunds
     BoxLayout:
         orientation: 'vertical'
 
 # ** BoxLayout Timer Scrols : 
         BoxLayout:
             orientation: 'horizontal'
-            padding: 20
+            # padding: 20
 
 # *** BoxLayout Hours : 
             BoxLayout:
@@ -160,23 +164,23 @@
                 padding: 5
 
                 Label:
-                    # id: curent_date_label
                     text: 'Hours'
+                    size_hint: [1,0.2]
                 Button:
-                    # text: 'Repit Last' + root.info
                     text: '+'
-                    # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Hours.text ) >= 0: widgets_label_Hours.text = str(int(widgets_label_Hours.text )  + 1)
+                        else : widgets_label_Hours.text = "00"
 
                 Label:
-                    # id: curent_date_label
-                    text: '- -'
+                    id: widgets_label_Hours
+                    text: '00'
 
                 Button:
-                    # text: 'Repit Last' + root.info
                     text: '-'
-                    # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Hours.text ) > 1: widgets_label_Hours.text = str(int(widgets_label_Hours.text )  - 1)
+                        else : widgets_label_Hours.text = "00"
 
 # *** BoxLayout Minuts : 
             BoxLayout:
@@ -184,24 +188,24 @@
                 padding: 5
 
                 Label:
-                    # id: curent_date_label
                     text: 'Minuts'
+                    size_hint: [1,0.2]
 
                 Button:
-                    # text: 'Repit Last' + root.info
                     text: '+'
-                    # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Minuts.text ) >= 0: widgets_label_Minuts.text = str(int(widgets_label_Minuts.text )  + 1)
+                        else : widgets_label_Minuts.text = "00"
 
                 Label:
-                    # id: curent_date_label
-                    text: '- -'
+                    id: widgets_label_Minuts
+                    text: '00'
 
                 Button:
-                    # text: 'Repit Last' + root.info
                     text: '-'
-                    # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Minuts.text ) > 1: widgets_label_Minuts.text = str(int(widgets_label_Minuts.text )  - 1)
+                        else : widgets_label_Minuts.text = "00"
 
 # *** BoxLayout Secunds : 
             BoxLayout:
@@ -211,22 +215,27 @@
                 Label:
                     # id: curent_date_label
                     text: 'Secunds'
+                    size_hint: [1,0.2]
 
                 Button:
                     # text: 'Repit Last' + root.info
                     text: '+'
                     # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Secunds.text ) >= 0: widgets_label_Secunds.text = str(int(widgets_label_Secunds.text )  + 1)
+                        else : widgets_label_Secunds.text = "00"
 
                 Label:
-                    # id: curent_date_label
-                    text: '- -'
+                    id: widgets_label_Secunds
+                    text: '00'
 
                 Button:
                     # text: 'Repit Last' + root.info
                     text: '-'
                     # on_press: root.do_action()
-                    on_press: Factory.StartSharpPopup().open()
+                    on_press: 
+                        if int(widgets_label_Secunds.text ) > 1: widgets_label_Secunds.text = str(int(widgets_label_Secunds.text )  - 1)
+                        else : widgets_label_Secunds.text = "00"
 
 # ** BoxLayout Buttons : 
         BoxLayout:
@@ -234,13 +243,12 @@
             orientation: 'horizontal'
             padding: 20
             spacing: 20
-
+            size_hint: [1,0.5]
             Button:
                 text: 'Start Timer' 
                 on_press:
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
-
             Button:
                 # text: 'Radio' + root.info
                 text: 'Cancel'
@@ -308,7 +316,7 @@
                 width: 5
                 size_hint: [None, None] 
                 size: [200, 150] 
-                background_color : [1, 1, 200, 1]
+                background_color : [1, 200, 1, 1]
                 on_press: 
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'conformsharpeningscreen'
@@ -344,6 +352,14 @@
             text: 'List of selected regims:'
 # ** Sets filde : 
         VBox
+            size_hint: [0.9, 1] 
+            canvas: 
+                Color: 
+                    # rgb: .45, .28, .5
+                    rgb: .20, .20, .20
+                Rectangle: 
+                    pos: self.pos 
+                    size: self.size 
             Label:
                 # id: curent_date_label
                 text: 'Full cicle'
@@ -372,7 +388,7 @@
                 padding: 0
                 Button: 
                     text: 'START' 
-                    background_color : [1, 1, 200, 1]
+                    background_color : [1, 200, 1, 1]
                     on_press: 
                         root.manager.transition.direction = 'left'
                         root.manager.current = 'processscreen'
@@ -386,6 +402,10 @@
 # * <ProcessScreen>: :
 # ** ------------------ProcessScreen----------------:
 <ProcessScreen>:
+    label_timeid: curent_time_label
+    label_dateid: curent_date_label
+    progressbarid: widget_progressbar
+    finishButton: widget_finishButton
     VBox
 # ** Title : 
         HBox
@@ -407,9 +427,9 @@
 # ** Progress Bar : 
         VBox
             ProgressBar:
-                value: 40
-                # id: curent_date_label
-                text: 'Full cicle'
+                value: 0
+                # color : [1, 1, 200, 1]
+                id: widget_progressbar
             Label:
                 # id: curent_date_label
                 text: 'Polishing'
@@ -421,7 +441,8 @@
             # width: 5
             size_hint: [1, 0.5] 
             # size: [200, 150] 
-            background_color : [1, 1, 200, 1]
+            background_color : [200, 1, 1, 1]
+            id: widget_finishButton
             on_press: 
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'mainmenu'
