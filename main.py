@@ -19,49 +19,17 @@ from random import randrange
 
 # ----------------------------------------------
 # * modul global id values:
-main_menu_timer_label = None 
+# print("-------modul global id-----------")
+main_menu_timer_label = False 
+progress_menu_start_progress = False 
 # ----------------------------------------------
-# * class FirstKivy(App): :
-# ** ----------------------------------------------:
-class FirstKivy(App):
-# ** __init__ : 
-    def __init__(self):
-        super().__init__()
-        self.newtext = "New!"
-
-
-# ----------------------------------------------
-# ** build : 
-    def build(self):
-        button = Button(text="Welcome to LikeGeeks!",
-                        # pos=(300,350), 
-                        # size_hint = (.25, .18))
-                        )
-        button.bind(on_press = partial(self.udateButton, button) )
-        button.bind(on_press = partial(self.updateText, button) )
-        label = Label(text="Hello Kivy!"
-                      # , size_hint = (.25, .18)
-                        )
-        layout = BoxLayout(orientation='vertical')
-        layout.add_widget(label)
-        layout.add_widget(button)
-        return layout
-
-
-# ----------------------------------------------
-# ** def updateText : 
-    def updateText(self, inst, *args):
-        self.newtext = self.newtext + "- Even Newer! "
-
-
-# ----------------------------------------------
-# ** def udateButton : 
-    def udateButton(self, inst, *args): 
-        inst.text = self.newtext
-                
-
-# ----------------------------------------------
-# ** ----------------------------------------------:
+# * def start_sharpening : 
+def start_sharpening(): 
+    if not progress_menu_start_progress:
+        print ("No Function to run sharpening Progress")
+        return
+    progress_menu_start_progress()
+    
 # * class Interface(BoxLayout): : 
 # ** -Interface------------------------------------:
 class Interface(BoxLayout):
@@ -73,14 +41,6 @@ class Interface(BoxLayout):
 # ** def __init__(self, **kwargs): : 
     def __init__(self, **kwargs):
         super(Interface, self).__init__(**kwargs)
-        # self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
-        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        # self.event_time_updaaate = Clock.schedule_interval(
-        #                     self.update_time, 0.5)
-        # print ("*******ids-interfase*******")
-        # for key, val in self.ids.items():
-        #     print("key={0}, val={1}".format(key, val))
-
 
 # ----------------------------------------------
 # ** ----------------------------------------------:
@@ -120,6 +80,8 @@ class MainScreen(Screen):
         # print ("*******ids-mainscreen*******")
         super(MainScreen, self).__init__(**kwargs)
         #  self.event_time_update for late use
+        # info = StringProperty()
+        # global main_menu_timer_label
         # main_menu_timer_label = self.label_timerid
         self.event_time_update = Clock.schedule_interval(
                             self.update_time, 0.5)
@@ -131,6 +93,9 @@ class MainScreen(Screen):
         # only after StringProperty() in init class
         self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
         self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
+        global main_menu_timer_label
+        if not main_menu_timer_label:
+          main_menu_timer_label = self.label_timerid
 
 
 # ----------------------------------------------
@@ -138,6 +103,7 @@ class MainScreen(Screen):
     def do_action(self):
         self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
         self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
+        main_menu_timer_label.text = datetime.now().strftime("%d/%m/%Y")
         # self.info = "hello world"
         # print("Time = ", time.time())
         # print("date = ", datetime.now().strftime("%d/%m/%Y"))
@@ -145,6 +111,7 @@ class MainScreen(Screen):
 
 
 # ----------------------------------------------
+    # ----------------------------------------------
 # ** ----------------------------------------------:
 
 
@@ -210,6 +177,9 @@ class ConformSharpeningScreen(Screen):
 
 
 # ----------------------------------------------
+# ** def Start : 
+    def start(self): 
+        start_sharpening()
 # ** ----------------------------------------------:
 
 
@@ -224,9 +194,13 @@ class ProcessScreen(Screen):
         super( ProcessScreen, self).__init__(**kwargs)
         #  self.event_time_update for late use
         self.progress_value = 0
+        self.event_progress = 0
         self.event_time_update = Clock.schedule_interval(
-                            self.update_time, 0.01)
-
+                            self.update_time, 0.5)
+        global progress_menu_start_progress 
+        progress_menu_start_progress = self.progressbar_Start
+        # self.event_progress = Clock.schedule_interval(
+        #                     self.progressbar_Update, 0.01)
 
 # ----------------------------------------------
 # ** def update_time(self): : 
@@ -234,13 +208,13 @@ class ProcessScreen(Screen):
         # only after StringProperty() in init class
         self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
         self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        self.progressbar_Update()
+        # self.progressbar_Update()
 
 
 # ----------------------------------------------
 # ----------------------------------------------
 # ** def progressbar_Update(self): : 
-    def progressbar_Update(self):
+    def progressbar_Update(self, cb):
         if self.progress_value >=100 : self.progressbar_Finish()
         # self.progress_value += randrange(0, 3)
         self.progress_value += 0.1
@@ -255,7 +229,21 @@ class ProcessScreen(Screen):
     def progressbar_Finish(self): 
         self.finishButton.background_color = [1, 200, 1, 1]
         self.finishButton.text = "Finished"
+        Clock.unschedule(self.progressbar_Update)
 
+
+#  ----------------------------------------------:
+# ** def progressbar_Start : 
+    def progressbar_Start(self): 
+        self.finishButton.background_color = [200, 1, 1, 1]
+        self.finishButton.text = "Cancel"
+        self.progress_value = 0
+        if self.event_progress : Clock.unschedule(self.progressbar_Update)
+        self.event_progress = Clock.schedule_interval(
+                            self.progressbar_Update, 0.01)
+
+
+#  ----------------------------------------------:
 # ** ----------------------------------------------:
 
 
@@ -275,16 +263,24 @@ class TimerScreen(Screen):
         super(TimerScreen, self).__init__(**kwargs)
         self.runing_Timer = None
         self.timerEnd = None
+        # ----------------------------------------------
 
-# ** defs : 
-    def isTimerRuning(self):
-        pass
 
-    def update_Timer(self):
+# ** def update_Timer(self, cb): : 
+    def update_Timer(self, cb):
         if not self.timerEnd : return print ("timer no started error")
-        print(( self.timerEnd).strftime("%d/%m/%Y %H:%M:%S"))
-        # print((self.timerEnd - datetime.now()).strftime("%d/%m/%Y"))
+        # print(( self.timerEnd).strftime("%d/%m/%Y %H:%M:%S"))
+        # print(( self.timerEnd - datetime.now()).strftime("%d/%m/%Y %H:%M:%S"))
+        # self.timerEnd - datetime.now())
+        delta =  self.timerEnd - datetime.now()
+        # print(str(delta).split("."))
+        # print(str(delta).split(".")[0])
+        if (delta.seconds < 1) : self.stop_Timer()
+        main_menu_timer_label.text = str(delta).split(".")[0]
+        # ----------------------------------------------
 
+
+# ** start_timer(self, d_hours=0, d_minutes=0, d_seconds=0): : 
     def start_timer(self, d_hours=0, d_minutes=0, d_seconds=0):
         self.timerEnd =     datetime.now() + timedelta(
                                   # days=50,
@@ -295,10 +291,28 @@ class TimerScreen(Screen):
                                   # milliseconds=29000,
                                   # weeks=2
                               )
+        if self.runing_Timer: Clock.unschedule(self.update_Timer) 
+        self.runing_Timer = Clock.schedule_interval(
+                                self.update_Timer, 0.5)
+        # ----------------------------------------------
 
-        # self.runing_Timer = Clock.schedule_interval(
-        #                     self.update_Timer, 0.5)
 
+# ** def stop_Timer : 
+    def stop_Timer(self): 
+        Clock.unschedule(self.update_Timer) 
+        self.runing_Timer = False
+        main_menu_timer_label.text = '--'
+
+
+# ----------------------------------------------
+# ** def do_action(self): : 
+# ----------------------------------------------
+    def do_action(self):
+        main_menu_timer_label.text = datetime.now().strftime("%d/%m/%Y")
+        # ----------------------------------------------
+# ** defs : 
+    def isTimerRuning(self):
+        pass
 
 
 # ----------------------------------------------
@@ -337,7 +351,6 @@ class TochilMenuApp(App):
 # ** def build(self): : 
     def build(self):
         root_widget = Interface()
-        # root_widget = SharpScreen()
         return root_widget
 
 

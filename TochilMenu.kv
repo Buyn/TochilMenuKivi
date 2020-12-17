@@ -59,12 +59,12 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        ProcessScreen:
+            name: "processscreen" 
         TimerScreen:
             name: "timerscreen" 
         MainScreen:
             name: "mainmenu" 
-        ProcessScreen:
-            name: "processscreen" 
         ConformSharpeningScreen:
             name: "conformsharpeningscreen" 
         SharpScreen:
@@ -249,6 +249,7 @@
                 on_press:
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
+                    root.start_timer(d_hours = int(widgets_label_Hours.text), d_minutes = int(widgets_label_Minuts.text), d_seconds = int(widgets_label_Secunds.text))
             Button:
                 # text: 'Radio' + root.info
                 text: 'Cancel'
@@ -392,6 +393,7 @@
                     on_press: 
                         root.manager.transition.direction = 'left'
                         root.manager.current = 'processscreen'
+                        root.start()
                 Button:
                     text: 'Back to select' 
                     background_color : [1, 1, 200, 1]
@@ -532,27 +534,3 @@
 
 
 # ** ----------------------------------------------:
-# * <StartSharpPopup@Popup>: : 
-<StartSharpPopup@Popup>:
-    title: "Conform to Start"
-    # auto_dismiss: False
-    BoxLayout:
-        orientation: 'vertical'
-        # orientation: 'horizontal'
-        padding: 20
-        Label:
-            text: 'Conform start of knife sharpening'
-        BoxLayout:
-            # orientation: 'vertical'
-            orientation: 'horizontal'
-            padding: 10
-            Button:
-                text: 'Start!'
-                on_release: root.dismiss()
-            Button:
-                text: 'Abort!'
-                on_release: root.dismiss()
-
-# Button:
-#     text: 'Open popup'
-#     on_release: Factory.StartSharpPopup().open()

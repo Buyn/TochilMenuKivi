@@ -163,13 +163,17 @@ class Test_Fun(unittest.TestCase):
 # ** def test_StarTimer(self):
     def test_StarTimer(self):
         test = TimerScreen ()
-        test.update_Timer()
+        global main_menu_timer_label
+        print("main_menu_timer_label =", main_menu_timer_label)
+        main_menu_timer_label = Label()
+        print("main_menu_timer_label =", main_menu_timer_label)
+        test.update_Timer( "S")
         test.start_timer()
-        test.update_Timer()
+        test.update_Timer( "S")
         test.start_timer(d_minutes = 3)
-        test.update_Timer()
+        test.update_Timer( "S")
         test.start_timer(d_hours = 3)
-        test.update_Timer()
+        test.update_Timer( "S")
         # test.timerEnd = timedelta(
         #                           # days=50,
         #                           seconds=27,
