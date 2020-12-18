@@ -14,14 +14,19 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, StringProperty
 import time
 from datetime import date, datetime, timedelta 
-from random import randrange
+from random import randrange, choice
 
 
 # ----------------------------------------------
 # * modul global id values:
-# print("-------modul global id-----------")
 main_menu_timer_label = False 
 progress_menu_start_progress = False 
+comform_menu_update_list = False 
+list_of_chosens = (
+                'Full cicle',
+                'Antibacterial',
+                'Polishing',
+                'Too sides') 
 # ----------------------------------------------
 # * def start_sharpening : 
 def start_sharpening(): 
@@ -127,14 +132,9 @@ class SharpScreen(Screen):
 
 # ----------------------------------------------
 # ** def __init__(self, **kwargs): : 
-    # def __init__(self, **kwargs):
-    #     super(SharpScreen, self).__init__(**kwargs)
-        # self.curent_time_label.text = datetime.now().strftime("%d/%m/%Y")
-        # self.curent_date_label.text = datetime.now().strftime("%H:%M:%S")
-        # self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
-        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        # self.event_time_updaaate = Clock.schedule_interval(
-        #                     self.update_time, 0.5)
+    def __init__(self, **kwargs):
+        super(SharpScreen, self).__init__(**kwargs)
+        self.list_of_chosens = {"Left Side","Midle Cicle"}
 
 
 # ----------------------------------------------
@@ -145,16 +145,90 @@ class SharpScreen(Screen):
 
 
 # ----------------------------------------------
+# ** def on_touch_down(self, touch): : 
+    def on_touch_down(self, touch):
+        if super(SharpScreen, self).on_touch_down(touch):
+            return True
+        if not self.collide_point(touch.x, touch.y):
+            return False
+        if self.antibacterial_Lid.collide_point(touch.x, touch.y):
+            self.antibacterial_cheker_rutin()
+            return True
+        if self.ceramics_Lid.collide_point(touch.x, touch.y):
+            self.ceram_cheker_rutin()
+            return True
+        return True
+
+
+# ----------------------------------------------
+# ** def antibacterial_cheker_rutin : 
+    def antibacterial_cheker_rutin(self): 
+        if self.antibacterial_chekerid.active : 
+            self.antibacterial_chekerid.active = False
+            self.chenge_list(remove = ("Antibacterial cicle"))
+            # print ("antibacterial active")
+            return True
+        else:
+            self.antibacterial_chekerid.active = True
+            self.chenge_list(add = ("Antibacterial cicle"))
+            # print("antibacterial Not active")
+            return True
+    
+    
+# ----------------------------------------------
+# ** def ceram_cheker_rutin : 
+    def ceram_cheker_rutin(self): 
+        if self.ceram_chekerid.active : 
+            self.ceram_chekerid.active = False
+            self.chenge_list(remove = ("Ceramic knife"))
+            # print ("ceram active")
+            return True
+        else:
+            self.ceram_chekerid.active = True
+            self.chenge_list(add = ("Ceramic knife"))
+            # print("ceram Not active")
+            return True
+    
+    
+# ----------------------------------------------
 # ** def do_action(self): : 
-    def do_action(self):
-        self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
-        self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        # self.info = "hello world"
-        # print("Time = ", time.time())
-        # print("date = ", datetime.now().strftime("%d/%m/%Y"))
-        # print("Time = ", datetime.now().strftime("%H:%M:%S"))
+    def do_action(self, text_list):
+        comform_menu_update_list(text_list)
 
 
+# ----------------------------------------------
+# ** def start : 
+    def start(self): 
+        comform_menu_update_list(self.list_of_chosens)
+
+
+# ----------------------------------------------
+# ** def chenge_list : 
+    def chenge_list(self, add=None,remove = None): 
+        if isinstance(add, str) :
+            try:
+                self.list_of_chosens.add(add)
+            except Exception:
+                pass
+            add = None
+        if add and isinstance(add, tuple):
+            for var in add:
+                self.list_of_chosens.add(var)
+            add = None
+        if isinstance(remove, str) :
+            try:
+                self.list_of_chosens.remove(remove)
+            except Exception:
+                pass
+            remove = None
+        if remove and isinstance(remove, tuple) :
+            for var in remove:
+                try:
+                    self.list_of_chosens.remove(var)
+                except Exception:
+                    pass
+            remove = None
+                      
 # ----------------------------------------------
 # ** ----------------------------------------------:
 
@@ -166,14 +240,25 @@ class ConformSharpeningScreen(Screen):
 
 # ----------------------------------------------
 # ** def __init__(self, **kwargs): : 
-    # def __init__(self, **kwargs):
-    #     super(SharpScreen, self).__init__(**kwargs)
-        # self.curent_time_label.text = datetime.now().strftime("%d/%m/%Y")
-        # self.curent_date_label.text = datetime.now().strftime("%H:%M:%S")
-        # self.label_dateid.text = datetime.now().strftime("%d/%m/%Y")
-        # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
-        # self.event_time_updaaate = Clock.schedule_interval(
-        #                     self.update_time, 0.5)
+    def __init__(self, **kwargs):
+        super(ConformSharpeningScreen, self).__init__(**kwargs)
+        global comform_menu_update_list 
+        comform_menu_update_list = self.update_list
+
+
+# ----------------------------------------------
+# ** def update_list : 
+    def update_list(self, text_list): 
+        self.list_of_comformationid.text = self.make_comform_list_string(text_list)
+
+
+# ----------------------------------------------
+# ** def make_comform_list_string : 
+    def make_comform_list_string(self, text_list): 
+        result = " "
+        for text  in text_list:
+            result = result + text + "\n "
+        return result
 
 
 # ----------------------------------------------
@@ -195,6 +280,7 @@ class ProcessScreen(Screen):
         #  self.event_time_update for late use
         self.progress_value = 0
         self.event_progress = 0
+        self.next_from_list = 0
         self.event_time_update = Clock.schedule_interval(
                             self.update_time, 0.5)
         global progress_menu_start_progress 
@@ -219,6 +305,10 @@ class ProcessScreen(Screen):
         # self.progress_value += randrange(0, 3)
         self.progress_value += 0.1
         self.progressbarid.value = self.progress_value
+        self.next_from_list -= 1
+        if self.next_from_list <= 0:
+            self.next_from_list = randrange(50, 200)
+            self.progress_text_labelid.text = choice(list_of_chosens)
         # only after StringProperty() in init class
         # self.label_timeid.text = datetime.now().strftime("%H:%M:%S")
 

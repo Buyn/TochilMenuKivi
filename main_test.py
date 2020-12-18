@@ -160,29 +160,32 @@ class Test_Fun(unittest.TestCase):
         #                           # weeks=2
         #                       )
 
-# ** def test_StarTimer(self):
-    def test_StarTimer(self):
-        test = TimerScreen ()
-        global main_menu_timer_label
-        print("main_menu_timer_label =", main_menu_timer_label)
-        main_menu_timer_label = Label()
-        print("main_menu_timer_label =", main_menu_timer_label)
-        test.update_Timer( "S")
-        test.start_timer()
-        test.update_Timer( "S")
-        test.start_timer(d_minutes = 3)
-        test.update_Timer( "S")
-        test.start_timer(d_hours = 3)
-        test.update_Timer( "S")
-        # test.timerEnd = timedelta(
-        #                           # days=50,
-        #                           seconds=27,
-        #                           # microseconds=10,
-        #                           # milliseconds=29000,
-        #                           minutes=5,
-        #                           hours=8,
-        #                           # weeks=2
-        #                       )
+# ** def test_StarComform(self):
+    def test_StarComform(self):
+        test = ConformSharpeningScreen()
+        # print("main_menu_timer_label =", main_menu_timer_label)
+        result = test.make_comform_list_string( ("New!", "test", "test!"))
+        self.assertEqual( result, ' New!\n test\n test!\n ')
+
+
+
+# ** def test_Sharp_cheng(self):
+    def test_Sharp_cheng(self):
+        test = SharpScreen()
+        # print("main_menu_timer_label =", main_menu_timer_label)
+        self.assertIsNotNone(test.list_of_chosens)
+        test.chenge_list( add = ("New!", "test", "test!"), remove = ("Full cicle", "sdf"))
+        tuple_var = ("Full cicle", "sdf")
+        print(type(tuple_var))
+        if isinstance(tuple_var, tuple) : print ("It Tuple")
+        else: print ("Not Tuple")
+        test.chenge_list()
+        self.assertEqual( test.list_of_chosens, { 'Too sides', 'Antibacterial', "New!", "test", "test!"})
+        test.chenge_list( add = ("Full cicle"), remove = ("test"))
+        # print (test.list_of_chosens)
+        self.assertEqual( test.list_of_chosens, { 'Too sides', 'Antibacterial', "New!", "Full cicle", "test!"})
+
+
 
 # ** ----------------------------------------------:
 # * def suite Init(): : 
@@ -193,7 +196,7 @@ def suite_Init():
     # suite.addTest(Test_Fun('test_sandbox'))
     # suite.addTest(Test_Fun('test_DeltaTime'))
     # suite.addTest(Test_Fun('test_TimerUpdate'))
-    suite.addTest(Test_Fun('test_StarTimer'))
+    suite.addTest(Test_Fun('test_Sharp_cheng'))
     # suite.addTest(WidgetTestCase('test_widget_resize'))
     return suite
 # ----------------------------------------------

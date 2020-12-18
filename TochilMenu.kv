@@ -59,6 +59,10 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        SharpScreen:
+            name: "sharpmenu" 
+        OptionScreen:
+            name: "optionscreen" 
         ProcessScreen:
             name: "processscreen" 
         TimerScreen:
@@ -67,10 +71,6 @@
             name: "mainmenu" 
         ConformSharpeningScreen:
             name: "conformsharpeningscreen" 
-        SharpScreen:
-            name: "sharpmenu" 
-        OptionScreen:
-            name: "optionscreen" 
 
 # * <MainScreen>: :
 # ** ------------------MainScreen----------------:
@@ -263,8 +263,10 @@
 # * <SharpScreen>: :
 # ** ------------------SharpScreen----------------:
 <SharpScreen>:
-    # label_timeid: curent_time_label
-    # label_dateid: curent_date_label
+    ceram_chekerid: ceram_cheker
+    antibacterial_chekerid: antibacterial_cheker
+    antibacterial_Lid: antibacterial_L
+    ceramics_Lid: cramics_L
     BoxLayout:
         # orientation: 'horizontal'
         orientation: 'vertical'
@@ -278,18 +280,17 @@
             ToggleButton:
                 group: 'cicle'
                 text: 'Full Cicle' 
-                # on_press: root.do_action()
-                # on_press: on_release: Factory.StartSharpPopup().open()
+                on_press: root.chenge_list(add = ('Full Cicle'), remove = ("Both Sides"))
             ToggleButton:
                 # text: 'Repit Last' + root.info
                 state: 'down'
                 group: 'cicle'
                 text: 'Midle Cicle'
-                # on_press: root.do_action()
-                # on_press: on_release: Factory.StartSharpPopup().open()
+                on_press: root.chenge_list(add = ('Both Sides'), remove = ("Full Cicle"))
 
-# ** BoxLayout back & next : 
+# ** BoxLayout back , next & CboxAnc: 
         HBox:
+# *** Button '<<': 
             Button:
                 text: '<<' 
                 font_size: '100sp'
@@ -300,17 +301,41 @@
                 on_press: 
                     root.manager.transition.direction = 'right'
                     root.manager.current = 'mainmenu'
+# *** CboxAnc : 
             VBox:
-                CboxAnc:
+# **** Ceramic knife CheckBox: 
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 10
+                    padding: 20
+                    id: cramics_L
+                    AncL_rc:
+                        CheckBox:
+                            id: ceram_cheker
+                            text: 'Ceramic knife' 
+                            size_hint: (0.4, 0.4)
                     AncL_cc:
                         Label:
                             size_hint: (0.3, 0.3)
                             text: 'Ceramic knife' 
-                CboxAnc:
+# **** Antibacterial CheckBox: 
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 10
+                    padding: 20
+                    id: antibacterial_L
+                    AncL_rc:
+                        CheckBox:
+                            id: antibacterial_cheker
+                            text: 'Antibacterial cicle' 
+                            size_hint: (0.4, 0.4)
                     AncL_cc:
                         Label:
                             size_hint: (0.3, 0.3)
                             text: 'Antibacterial cicle' 
+                            # on_touch_down: root.do_action(self.text, self.events())
+                            # on_touch_down: if (not antibacterial_cheker.active): antibacterial_cheker.active=True; print('down')
+# *** Button 'ok': 
             Button:
                 text: 'ok' 
                 font_size: '100sp'
@@ -321,29 +346,32 @@
                 on_press: 
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'conformsharpeningscreen'
+                    # root.do_action(("Full cicle","Antibacterial", "Too sides"))
+                    root.start()
 # ** BoxLayout Left right side : 
         BoxLayout:
             orientation: 'vertical'
             ToggleButton:
                 group: 'sides'
                 text: 'Both Sides' 
-                # on_press: root.do_action()
+                on_press: root.chenge_list(add = ('Both Sides'), remove = ('Right Side', 'Left Side'))
             BoxLayout:
                 orientation: 'horizontal'
                 ToggleButton:
                     group: 'sides'
                     state: 'down'
                     text: 'Left Side' 
-                    # on_press: root.do_action()
+                    on_press: root.chenge_list(add = ('Left Side'), remove = ('Right Side', 'Both Sides'))
                 ToggleButton:
                     group: 'sides'
                     text: 'Right Side'
-                    # on_press: root.do_action()
+                    on_press: root.chenge_list(add = ('Right Side'), remove = ('Both Sides', 'Left Side'))
 
 # ** ----------------------------------------------:
 # * <ConformSharpeningScreen>: :
 # ** ------------------ConformSharpeningScreen----------------:
 <ConformSharpeningScreen>:
+    list_of_comformationid: list_of_comformation
     VBox
 # ** Title : 
         Label:
@@ -362,14 +390,8 @@
                     pos: self.pos 
                     size: self.size 
             Label:
-                # id: curent_date_label
+                id: list_of_comformation
                 text: 'Full cicle'
-            Label:
-                # id: curent_date_label
-                text: 'Antibacterial'
-            Label:
-                # id: curent_date_label
-                text: 'Too sides'
 
 # ** BoxLayout Buttons : 
         HBox:
@@ -407,6 +429,7 @@
     label_timeid: curent_time_label
     label_dateid: curent_date_label
     progressbarid: widget_progressbar
+    progress_text_labelid: progress_text_label
     finishButton: widget_finishButton
     VBox
 # ** Title : 
@@ -433,7 +456,7 @@
                 # color : [1, 1, 200, 1]
                 id: widget_progressbar
             Label:
-                # id: curent_date_label
+                id: progress_text_label
                 text: 'Polishing'
 
 # ** Buttons : 
@@ -519,15 +542,17 @@
                     # on_press: root.do_action()
                 Slider:
                     min: 0
-                    max: 1
+                    max: 100
                     value: 0.5
                     size_hint_y: None
                     height: 50
+                    on_value: comformatio_value_label.text = str(int(self.value)) + "%"
 
 
             Label:
                 # text: 'Repit Last' + root.info
                 text: '50%'
+                id: comformatio_value_label
                 font_size: '100sp'
                 width: 5
                 # on_press: root.do_action()
