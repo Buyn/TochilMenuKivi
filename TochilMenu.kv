@@ -59,6 +59,8 @@
 # ** ---<Interface>:-------------------------------:
 <Interface>:
     ScreenManager:
+        MainScreen:
+            name: "mainmenu" 
         SharpScreen:
             name: "sharpmenu" 
         OptionScreen:
@@ -67,8 +69,6 @@
             name: "processscreen" 
         TimerScreen:
             name: "timerscreen" 
-        MainScreen:
-            name: "mainmenu" 
         ConformSharpeningScreen:
             name: "conformsharpeningscreen" 
 
@@ -239,7 +239,6 @@
 
 # ** BoxLayout Buttons : 
         BoxLayout:
-        # FloatLayout:
             orientation: 'horizontal'
             padding: 20
             spacing: 20
@@ -256,6 +255,7 @@
                 on_press:
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
+                    root.stop_Timer()
 
 # ** ----------------------------------------------:
 
@@ -280,13 +280,13 @@
             ToggleButton:
                 group: 'cicle'
                 text: 'Full Cicle' 
-                on_press: root.chenge_list(add = ('Full Cicle'), remove = ("Both Sides"))
+                on_press: root.chenge_list(add = ("Full Cicle"), remove = ("Midle Cicle"))
             ToggleButton:
                 # text: 'Repit Last' + root.info
                 state: 'down'
                 group: 'cicle'
                 text: 'Midle Cicle'
-                on_press: root.chenge_list(add = ('Both Sides'), remove = ("Full Cicle"))
+                on_press: root.chenge_list(add = ("Midle Cicle"), remove = ("Full Cicle"))
 
 # ** BoxLayout back , next & CboxAnc: 
         HBox:
@@ -314,6 +314,7 @@
                             id: ceram_cheker
                             text: 'Ceramic knife' 
                             size_hint: (0.4, 0.4)
+                            on_press: root.ceram_cheker_rutin()
                     AncL_cc:
                         Label:
                             size_hint: (0.3, 0.3)
@@ -329,6 +330,7 @@
                             id: antibacterial_cheker
                             text: 'Antibacterial cicle' 
                             size_hint: (0.4, 0.4)
+                            on_press: root.antibacterial_cheker_rutin()
                     AncL_cc:
                         Label:
                             size_hint: (0.3, 0.3)
@@ -354,18 +356,18 @@
             ToggleButton:
                 group: 'sides'
                 text: 'Both Sides' 
-                on_press: root.chenge_list(add = ('Both Sides'), remove = ('Right Side', 'Left Side'))
+                on_press: root.chenge_list(add = ("Both Sides"), remove = ("Right Side", "Left Side"))
             BoxLayout:
                 orientation: 'horizontal'
                 ToggleButton:
                     group: 'sides'
                     state: 'down'
                     text: 'Left Side' 
-                    on_press: root.chenge_list(add = ('Left Side'), remove = ('Right Side', 'Both Sides'))
+                    on_press: root.chenge_list(add = ("Left Side"), remove = ("Right Side", "Both Sides"))
                 ToggleButton:
                     group: 'sides'
                     text: 'Right Side'
-                    on_press: root.chenge_list(add = ('Right Side'), remove = ('Both Sides', 'Left Side'))
+                    on_press: root.chenge_list(add = ("Right Side"), remove = ("Both Sides", "Left Side"))
 
 # ** ----------------------------------------------:
 # * <ConformSharpeningScreen>: :

@@ -22,11 +22,12 @@ from random import randrange, choice
 main_menu_timer_label = False 
 progress_menu_start_progress = False 
 comform_menu_update_list = False 
-list_of_chosens = (
+default_list_of_chosens = (
                 'Full cicle',
                 'Antibacterial',
                 'Polishing',
                 'Too sides') 
+list_of_chosens = default_list_of_chosens
 # ----------------------------------------------
 # * def start_sharpening : 
 def start_sharpening(): 
@@ -151,10 +152,11 @@ class SharpScreen(Screen):
             return True
         if not self.collide_point(touch.x, touch.y):
             return False
-        if self.antibacterial_Lid.collide_point(touch.x, touch.y):
+        # if self.antibacterial_Lid.collide_point(touch.x, touch.y) or self.antibacterial_chekerid.collide_point(touch.x, touch.y):
+        if self.antibacterial_Lid.collide_point(touch.x, touch.y) :
             self.antibacterial_cheker_rutin()
             return True
-        if self.ceramics_Lid.collide_point(touch.x, touch.y):
+        if self.ceramics_Lid.collide_point(touch.x, touch.y) :
             self.ceram_cheker_rutin()
             return True
         return True
@@ -199,6 +201,8 @@ class SharpScreen(Screen):
 # ----------------------------------------------
 # ** def start : 
     def start(self): 
+        global list_of_chosens
+        list_of_chosens = default_list_of_chosens + tuple(self.list_of_chosens)
         comform_menu_update_list(self.list_of_chosens)
 
 
@@ -372,6 +376,9 @@ class TimerScreen(Screen):
 
 # ** start_timer(self, d_hours=0, d_minutes=0, d_seconds=0): : 
     def start_timer(self, d_hours=0, d_minutes=0, d_seconds=0):
+        if (d_hours + d_minutes + d_seconds) <= 0:
+            d_hours,d_minutes,d_seconds = 0 , 0, 1
+            # d_seconds = 1
         self.timerEnd =     datetime.now() + timedelta(
                                   # days=50,
                                   hours=d_hours,
