@@ -369,16 +369,15 @@ class TimerScreen(Screen):
         delta =  self.timerEnd - datetime.now()
         # print(str(delta).split("."))
         # print(str(delta).split(".")[0])
-        if (delta.seconds < 1) : self.stop_Timer()
         main_menu_timer_label.text = str(delta).split(".")[0]
+        if (delta.seconds < 1) : self.stop_Timer()
         # ----------------------------------------------
 
 
 # ** start_timer(self, d_hours=0, d_minutes=0, d_seconds=0): : 
     def start_timer(self, d_hours=0, d_minutes=0, d_seconds=0):
         if (d_hours + d_minutes + d_seconds) <= 0:
-            d_hours,d_minutes,d_seconds = 0 , 0, 1
-            # d_seconds = 1
+            d_hours,d_minutes,d_seconds = 0, 0, 1
         self.timerEnd =     datetime.now() + timedelta(
                                   # days=50,
                                   hours=d_hours,
@@ -398,7 +397,7 @@ class TimerScreen(Screen):
     def stop_Timer(self): 
         Clock.unschedule(self.update_Timer) 
         self.runing_Timer = False
-        main_menu_timer_label.text = '--'
+        main_menu_timer_label.text = '  '
 
 
 # ----------------------------------------------
@@ -419,10 +418,6 @@ class TimerScreen(Screen):
 # * class OptionScreen(Screen): : 
 # ** OptionScreen------------------------------------:
 class OptionScreen(Screen):
-    # curent_time_label = ObjectProperty()
-    # curent_date_label = ObjectProperty()
-    # label_dateid = ObjectProperty(datetime.now().strftime("%d/%m/%Y"))
-    # label_timeid = ObjectProperty(datetime.now().strftime("%H:%M:%S"))
     info = StringProperty()
 
 # ----------------------------------------------
@@ -437,6 +432,33 @@ class OptionScreen(Screen):
         #                     self.update_time, 0.5)
 
 
+# ----------------------------------------------
+# ** def on_touch_down(self, touch): : 
+    def on_touch_down(self, touch):
+        if super(OptionScreen, self).on_touch_down(touch):
+            return True
+        if not self.collide_point(touch.x, touch.y):
+            return False
+        # if self.antibacterial_Lid.collide_point(touch.x, touch.y) or self.antibacterial_chekerid.collide_point(touch.x, touch.y):
+        if self.diod_layout_id.collide_point(touch.x, touch.y) :
+            self.togle_diod_cheker()
+            return True
+        return True
+
+
+# ----------------------------------------------
+# ** def togle_diod_cheker : 
+    def togle_diod_cheker(self): 
+        if self.diod_cheker_id.active : 
+            self.diod_cheker_id.active = False
+            # print ("antibacterial active")
+            return True
+        else:
+            self.diod_cheker_id.active = True
+            # print("antibacterial Not active")
+            return True
+    
+    
 # ----------------------------------------------
 # ** ----------------------------------------------:
 
