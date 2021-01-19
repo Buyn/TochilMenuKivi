@@ -490,7 +490,10 @@ def main(argv):
 if __name__ == "__main__": 
     import sys
     # sys.argv = ['', 'Test.testName']
-    Window.fullscreen = True
+    # Window.fullscreen = True
+    # Window.size = (1366, 768)
+    # Window.fullscreen = 'auto'
+    Window.maximize()
     main(sys.argv)
 # ----------------------------------------------
 # * ----------------------------------------------:
