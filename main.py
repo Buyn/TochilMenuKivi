@@ -23,7 +23,7 @@ main_menu_timer_label = False
 progress_menu_start_progress = False 
 comform_menu_update_list = False 
 default_list_of_chosens = (
-                'Full cicle',
+                'Full Cycle',
                 'Antibacterial',
                 'Polishing',
                 'Too sides') 
@@ -135,7 +135,7 @@ class SharpScreen(Screen):
 # ** def __init__(self, **kwargs): : 
     def __init__(self, **kwargs):
         super(SharpScreen, self).__init__(**kwargs)
-        self.list_of_chosens = {"Left Side","Midle Cicle"}
+        self.list_of_chosens = {"Left Side","Middle Cycle"}
 
 
 # ----------------------------------------------

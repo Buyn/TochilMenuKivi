@@ -69,10 +69,10 @@
     ScreenManager:
         MainScreen:
             name: "mainmenu" 
-        TimerScreen:
-            name: "timerscreen" 
         OptionScreen:
             name: "optionscreen" 
+        TimerScreen:
+            name: "timerscreen" 
         SharpScreen:
             name: "sharpmenu" 
         ProcessScreen:
@@ -129,7 +129,7 @@
             padding: 50
 
             Button:
-                text: 'Google Assistant' 
+                text: "Google Assistant" 
                 on_press: root.do_action()
 
             Button:
@@ -300,19 +300,19 @@
         orientation: 'vertical'
 
 
-# ** BoxLayout start cicles : 
+# ** BoxLayout start cycles : 
         BoxLayout:
             # orientation: 'vertical'
             orientation: 'horizontal'
             padding: 5
             ToggleButton:
-                group: 'cicle'
+                group: 'cycle'
                 text: 'Full Cycle' 
                 on_press: root.chenge_list(add = ("Full Cycle"), remove = ("Middle Cycle"))
             ToggleButton:
                 # text: 'Repit Last' + root.info
                 state: 'down'
-                group: 'cicle'
+                group: 'cycle'
                 text: 'Middle Cycle'
                 on_press: root.chenge_list(add = ("Middle Cycle"), remove = ("Full Cycle"))
 
@@ -540,10 +540,8 @@
                 orientation: 'horizontal'
                 padding: 20
                 id: diod_layout
-                # on_touch_down: if (not diod_cheker.active): diod_cheker.active=True; print('down')
                 AnchorLayout:
                     anchor_x:'right' 
-                    # anchor_y:'top'
                     anchor_y:'center'
                     CheckBox:
                         id: diod_cheker
@@ -553,11 +551,10 @@
                 AnchorLayout:
                     anchor_x:'left' 
                     anchor_y:'center'
-                    # anchor_y:'top'
                     Label:
                         # size_hint_x: None
                         text: 'LED Strip Light' 
-                        size_hint: (0.1, 0.1)
+                        size_hint: (0.4, 0.1)
 
 # ** BoxLayout Slider : 
         BoxLayout:
