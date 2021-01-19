@@ -39,6 +39,14 @@
     anchor_x:'left' 
     # anchor_y:'top'
     anchor_y:'center'
+# *** AncL_cb@AnchorLayout : 
+<AncL_cb@AnchorLayout>:
+    anchor_x:'center' 
+    anchor_y:'bottom'
+# *** AncL_ct@AnchorLayout : 
+<AncL_ct@AnchorLayout>:
+    anchor_x:'center' 
+    anchor_y:'top'
 # *** AncL_cc@AnchorLayout : 
 <AncL_cc@AnchorLayout>:
     anchor_x:'center' 
@@ -61,14 +69,14 @@
     ScreenManager:
         MainScreen:
             name: "mainmenu" 
-        SharpScreen:
-            name: "sharpmenu" 
         OptionScreen:
             name: "optionscreen" 
-        ProcessScreen:
-            name: "processscreen" 
         TimerScreen:
             name: "timerscreen" 
+        SharpScreen:
+            name: "sharpmenu" 
+        ProcessScreen:
+            name: "processscreen" 
         ConformSharpeningScreen:
             name: "conformsharpeningscreen" 
 
@@ -108,6 +116,8 @@
 
                 Label:
                     id: curent_timer_label
+                    color : [1, 1, 200, 1]
+                    font_size: '50sp'
                     text: ' '
 
 
@@ -119,7 +129,7 @@
             padding: 50
 
             Button:
-                text: 'Google Asistent' 
+                text: "Google Assistant" 
                 on_press: root.do_action()
 
             Button:
@@ -129,10 +139,12 @@
 
             Label:
                 id: curent_date_label
+                font_size: '25sp'
                 text: 'Augus/25/2020'
 
             Label:
                 id: curent_time_label
+                font_size: '50sp'
                 text: root.info
 
             Button:
@@ -165,19 +177,23 @@
 
                 Label:
                     text: 'Hours'
+                    font_size: '30sp'
                     size_hint: [1,0.2]
                 Button:
                     text: '+'
+                    font_size: '50sp'
                     on_press: 
                         if int(widgets_label_Hours.text ) >= 0: widgets_label_Hours.text = str(int(widgets_label_Hours.text )  + 1)
                         else : widgets_label_Hours.text = "00"
 
                 Label:
                     id: widgets_label_Hours
+                    font_size: '100sp'
                     text: '00'
 
                 Button:
                     text: '-'
+                    font_size: '50sp'
                     on_press: 
                         if int(widgets_label_Hours.text ) > 1: widgets_label_Hours.text = str(int(widgets_label_Hours.text )  - 1)
                         else : widgets_label_Hours.text = "00"
@@ -188,21 +204,25 @@
                 padding: 5
 
                 Label:
-                    text: 'Minuts'
+                    text: 'Minutes'
+                    font_size: '30sp'
                     size_hint: [1,0.2]
 
                 Button:
                     text: '+'
+                    font_size: '50sp'
                     on_press: 
                         if int(widgets_label_Minuts.text ) >= 0: widgets_label_Minuts.text = str(int(widgets_label_Minuts.text )  + 1)
                         else : widgets_label_Minuts.text = "00"
 
                 Label:
                     id: widgets_label_Minuts
+                    font_size: '100sp'
                     text: '00'
 
                 Button:
                     text: '-'
+                    font_size: '50sp'
                     on_press: 
                         if int(widgets_label_Minuts.text ) > 1: widgets_label_Minuts.text = str(int(widgets_label_Minuts.text )  - 1)
                         else : widgets_label_Minuts.text = "00"
@@ -214,12 +234,14 @@
 
                 Label:
                     # id: curent_date_label
-                    text: 'Secunds'
+                    text: 'Seconds'
+                    font_size: '30sp'
                     size_hint: [1,0.2]
 
                 Button:
                     # text: 'Repit Last' + root.info
                     text: '+'
+                    font_size: '50sp'
                     # on_press: root.do_action()
                     on_press: 
                         if int(widgets_label_Secunds.text ) >= 0: widgets_label_Secunds.text = str(int(widgets_label_Secunds.text )  + 1)
@@ -227,11 +249,13 @@
 
                 Label:
                     id: widgets_label_Secunds
+                    font_size: '100sp'
                     text: '00'
 
                 Button:
                     # text: 'Repit Last' + root.info
                     text: '-'
+                    font_size: '50sp'
                     # on_press: root.do_action()
                     on_press: 
                         if int(widgets_label_Secunds.text ) > 1: widgets_label_Secunds.text = str(int(widgets_label_Secunds.text )  - 1)
@@ -245,6 +269,8 @@
             size_hint: [1,0.5]
             Button:
                 text: 'Start Timer' 
+                font_size: '50sp'
+                background_color : [1, 200, 1, 1]
                 on_press:
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
@@ -252,6 +278,8 @@
             Button:
                 # text: 'Radio' + root.info
                 text: 'Cancel'
+                font_size: '50sp'
+                background_color : [200, 1, 1, 1]
                 on_press:
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'mainmenu'
@@ -272,21 +300,21 @@
         orientation: 'vertical'
 
 
-# ** BoxLayout start cicles : 
+# ** BoxLayout start cycles : 
         BoxLayout:
             # orientation: 'vertical'
             orientation: 'horizontal'
             padding: 5
             ToggleButton:
-                group: 'cicle'
-                text: 'Full Cicle' 
-                on_press: root.chenge_list(add = ("Full Cicle"), remove = ("Midle Cicle"))
+                group: 'cycle'
+                text: 'Full Cycle' 
+                on_press: root.chenge_list(add = ("Full Cycle"), remove = ("Middle Cycle"))
             ToggleButton:
                 # text: 'Repit Last' + root.info
                 state: 'down'
-                group: 'cicle'
-                text: 'Midle Cicle'
-                on_press: root.chenge_list(add = ("Midle Cicle"), remove = ("Full Cicle"))
+                group: 'cycle'
+                text: 'Middle Cycle'
+                on_press: root.chenge_list(add = ("Middle Cycle"), remove = ("Full Cycle"))
 
 # ** BoxLayout back , next & CboxAnc: 
         HBox:
@@ -328,13 +356,13 @@
                     AncL_rc:
                         CheckBox:
                             id: antibacterial_cheker
-                            text: 'Antibacterial cicle' 
+                            text: 'Antibacterial cycle' 
                             size_hint: (0.4, 0.4)
                             on_press: root.antibacterial_cheker_rutin()
                     AncL_cc:
                         Label:
                             size_hint: (0.3, 0.3)
-                            text: 'Antibacterial cicle' 
+                            text: 'Antibacterial cycle' 
                             # on_touch_down: root.do_action(self.text, self.events())
                             # on_touch_down: if (not antibacterial_cheker.active): antibacterial_cheker.active=True; print('down')
 # *** Button 'ok': 
@@ -348,7 +376,7 @@
                 on_press: 
                     root.manager.transition.direction = 'left'
                     root.manager.current = 'conformsharpeningscreen'
-                    # root.do_action(("Full cicle","Antibacterial", "Too sides"))
+                    # root.do_action(("Full cycle","Antibacterial", "Both Sides"))
                     root.start()
 # ** BoxLayout Left right side : 
         BoxLayout:
@@ -380,7 +408,7 @@
             # id: curent_date_label
             size_hint: [0.5, 0.1] 
             font_size: '30sp'
-            text: 'List of selected regims:'
+            text: 'List of selected modes:'
 # ** Sets filde : 
         VBox
             size_hint: [0.9, 1] 
@@ -393,7 +421,8 @@
                     size: self.size 
             Label:
                 id: list_of_comformation
-                text: 'Full cicle'
+                font_size: '20sp'
+                text: 'Full cycle'
 
 # ** BoxLayout Buttons : 
         HBox:
@@ -459,6 +488,7 @@
                 id: widget_progressbar
             Label:
                 id: progress_text_label
+                font_size: '30sp'
                 text: 'Polishing'
 
 # ** Buttons : 
@@ -477,8 +507,8 @@
 # * <OptionScreen>: :
 # ** ------------------OptionScreen----------------:
 <OptionScreen>:
-    # label_timeid: curent_time_label
-    # label_dateid: curent_date_label
+    diod_cheker_id: diod_cheker
+    diod_layout_id: diod_layout
     BoxLayout:
         # orientation: 'horizontal'
         orientation: 'vertical'
@@ -509,48 +539,43 @@
             BoxLayout:
                 orientation: 'horizontal'
                 padding: 20
-                # on_touch_down: diod_cheker.active=True ;print('down')
-                on_touch_down: if (not diod_cheker.active): diod_cheker.active=True; print('down')
+                id: diod_layout
                 AnchorLayout:
                     anchor_x:'right' 
-                    # anchor_y:'top'
                     anchor_y:'center'
                     CheckBox:
                         id: diod_cheker
                         text: 'Diod line' 
                         size_hint: (0.3, 0.9)
+                        # on_press: root.togle_diod_cheker()
                 AnchorLayout:
                     anchor_x:'left' 
                     anchor_y:'center'
-                    # anchor_y:'top'
                     Label:
                         # size_hint_x: None
-                        text: 'Diod line' 
-                        size_hint: (0.1, 0.1)
+                        text: 'LED Strip Light' 
+                        size_hint: (0.4, 0.1)
 
-# ** BoxLayout start cicles : 
+# ** BoxLayout Slider : 
         BoxLayout:
             # orientation: 'vertical'
             orientation: 'horizontal'
             padding: 5
 
             BoxLayout:
-                # orientation: 'vertical'
                 orientation: 'vertical'
                 padding: 5
-
-                Label:
-                    text: 'Speech comformatio' 
-                    # on_press: root.do_action()
-                Slider:
-                    min: 0
-                    max: 100
-                    value: 0.5
-                    size_hint_y: None
-                    height: 50
-                    on_value: comformatio_value_label.text = str(int(self.value)) + "%"
-
-
+                AncL_cb:
+                    Label:
+                        text: 'Voice confirmation' 
+                AncL_ct:
+                    Slider:
+                        min: 0
+                        max: 100
+                        value: 50
+                        size_hint_y: None
+                        height: 50
+                        on_value: comformatio_value_label.text = str(int(self.value)) + "%"
             Label:
                 # text: 'Repit Last' + root.info
                 text: '50%'
