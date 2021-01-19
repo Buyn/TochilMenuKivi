@@ -15,6 +15,7 @@ from kivy.properties import ObjectProperty, StringProperty
 import time
 from datetime import date, datetime, timedelta 
 from random import randrange, choice
+from kivy.core.window import Window
 
 
 # ----------------------------------------------
@@ -489,6 +490,7 @@ def main(argv):
 if __name__ == "__main__": 
     import sys
     # sys.argv = ['', 'Test.testName']
+    Window.fullscreen = True
     main(sys.argv)
 # ----------------------------------------------
 # * ----------------------------------------------:
